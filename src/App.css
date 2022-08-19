@@ -36,3 +36,11 @@
     transform: rotate(360deg);
   }
 }
+.nueng{
+  background-color: "white";
+  padding-top: 5%;
+  padding-bottom: 2%;
+}
+.chartbar{
+  align-items: center;
+}

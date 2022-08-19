@@ -23,95 +23,319 @@ import Bars from '../../components/bars'
 import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
 import Container from '@mui/material/Container';
+import {
+    Line,
+    XAxis,
+    ComposedChart,
+    Area,
+    CartesianGrid,
+    YAxis,
+    Tooltip,
+    Legend,
+    Bar,
+    PieChart,
+    Pie,
+} from 'recharts';
 
-const itemData = [
+import Paper from '@mui/material/Paper';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TablePagination from '@mui/material/TablePagination';
+import TableRow from '@mui/material/TableRow';
+
+interface Column {
+    id: 'name' | 'code' | 'population' | 'size' | 'density';
+    label: string;
+    minWidth?: number;
+    align?: 'right';
+    format?: (value: number) => string;
+}
+
+const columns: Column[] = [
+    { id: 'name', label: 'Name', minWidth: 170 },
+    { id: 'code', label: 'ISO\u00a0Code', minWidth: 100 },
     {
-        img: 'https://images.unsplash.com/photo-1551963831-b3b1ca40c98e',
-        title: 'Breakfast',
+        id: 'population',
+        label: 'Population',
+        minWidth: 170,
+        align: 'right',
+        format: (value: number) => value.toLocaleString('en-US'),
     },
     {
-        img: 'https://images.unsplash.com/photo-1551782450-a2132b4ba21d',
-        title: 'Burger',
+        id: 'size',
+        label: 'Size\u00a0(km\u00b2)',
+        minWidth: 170,
+        align: 'right',
+        format: (value: number) => value.toLocaleString('en-US'),
     },
     {
-        img: 'https://images.unsplash.com/photo-1522770179533-24471fcdba45',
-        title: 'Camera',
-    },
-    {
-        img: 'https://images.unsplash.com/photo-1444418776041-9c7e33cc5a9c',
-        title: 'Coffee',
-    },
-    {
-        img: 'https://images.unsplash.com/photo-1533827432537-70133748f5c8',
-        title: 'Hats',
-    },
-    {
-        img: 'https://images.unsplash.com/photo-1558642452-9d2a7deb7f62',
-        title: 'Honey',
-    },
-    {
-        img: 'https://images.unsplash.com/photo-1516802273409-68526ee1bdd6',
-        title: 'Basketball',
-    },
-    {
-        img: 'https://images.unsplash.com/photo-1518756131217-31eb79b20e8f',
-        title: 'Fern',
-    },
-    {
-        img: 'https://images.unsplash.com/photo-1597645587822-e99fa5d45d25',
-        title: 'Mushrooms',
-    },
-    {
-        img: 'https://images.unsplash.com/photo-1567306301408-9b74779a11af',
-        title: 'Tomato basil',
-    },
-    {
-        img: 'https://images.unsplash.com/photo-1471357674240-e1a485acb3e1',
-        title: 'Sea star',
-    },
-    {
-        img: 'https://images.unsplash.com/photo-1589118949245-7d38baf380d6',
-        title: 'Bike',
+        id: 'density',
+        label: 'Density',
+        minWidth: 170,
+        align: 'right',
+        format: (value: number) => value.toFixed(2),
     },
 ];
 
+interface Data {
+    name: string;
+    code: string;
+    population: number;
+    size: number;
+    density: number;
+}
+
+function createData(
+    name: string,
+    code: string,
+    population: number,
+    size: number,
+): Data {
+    const density = population / size;
+    return { name, code, population, size, density };
+}
+
+const rows = [
+    createData('India', 'IN', 1324171354, 3287263),
+    createData('China', 'CN', 1403500365, 9596961),
+    createData('Italy', 'IT', 60483973, 301340),
+    createData('United States', 'US', 327167434, 9833520),
+    createData('Canada', 'CA', 37602103, 9984670),
+    createData('Australia', 'AU', 25475400, 7692024),
+    createData('Germany', 'DE', 83019200, 357578),
+    createData('Ireland', 'IE', 4857000, 70273),
+    createData('Mexico', 'MX', 126577691, 1972550),
+    createData('Japan', 'JP', 126317000, 377973),
+    createData('France', 'FR', 67022000, 640679),
+    createData('United Kingdom', 'GB', 67545757, 242495),
+    createData('Russia', 'RU', 146793744, 17098246),
+    createData('Nigeria', 'NG', 200962417, 923768),
+    createData('Brazil', 'BR', 210147125, 8515767),
+];
+
+
+
+
+
+
+
+
+const data = [
+    {
+        "name": "Page A",
+        "uv": 4000,
+        "pv": 2400,
+        "amt": 2400
+    },
+    {
+        "name": "Page B",
+        "uv": 3000,
+        "pv": 1398,
+        "amt": 2210
+    },
+    {
+        "name": "Page C",
+        "uv": 2000,
+        "pv": 9800,
+        "amt": 2290
+    },
+    {
+        "name": "Page D",
+        "uv": 2780,
+        "pv": 3908,
+        "amt": 2000
+    },
+    {
+        "name": "Page E",
+        "uv": 1890,
+        "pv": 4800,
+        "amt": 2181
+    },
+    {
+        "name": "Page F",
+        "uv": 2390,
+        "pv": 3800,
+        "amt": 2500
+    },
+    {
+        "name": "Page G",
+        "uv": 3490,
+        "pv": 4300,
+        "amt": 2100
+    }
+]
+const data01 = [
+    {
+        "name": "Group A",
+        "value": 400
+    },
+    {
+        "name": "Group B",
+        "value": 300
+    },
+    {
+        "name": "Group C",
+        "value": 300
+    },
+    {
+        "name": "Group D",
+        "value": 200
+    },
+    {
+        "name": "Group E",
+        "value": 278
+    },
+    {
+        "name": "Group F",
+        "value": 189
+    }
+];
+const data02 = [
+    {
+        "name": "Group A",
+        "value": 2400
+    },
+    {
+        "name": "Group B",
+        "value": 4567
+    },
+    {
+        "name": "Group C",
+        "value": 1398
+    },
+    {
+        "name": "Group D",
+        "value": 9800
+    },
+    {
+        "name": "Group E",
+        "value": 3908
+    },
+    {
+        "name": "Group F",
+        "value": 4800
+    }
+];
 
 export default function MiniDrawer() {
+
+    const [page, setPage] = React.useState(0);
+    const [rowsPerPage, setRowsPerPage] = React.useState(10);
+
+    const handleChangePage = (event: unknown, newPage: number) => {
+        setPage(newPage);
+    };
+
+    const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setRowsPerPage(+event.target.value);
+        setPage(0);
+    };
+
+
+
+
     return (
         <Box sx={{ display: 'flex' }}>
             <CssBaseline />
             <Bars />
             <Container
-            // maxWidth="sm"
+                className='nueng'
             >
-                <Box sx={{ bgcolor: '#cfe8fc', height: "100vh" }}>
-                    <ImageList cols={3} rowHeight={164}>
-                        {itemData.map((item) => (
-                            <ImageListItem key={item.img}>
-                                <img
-                                    src={`${item.img}?w=164&h=164&fit=crop&auto=format`}
-                                    srcSet={`${item.img}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
-                                    alt={item.title}
-                                    loading="lazy"
+                <Box sx={{
+                    bgcolor: 'white', height: "100vh",
+                    //  width: "auto" 
+                }}>
+                    <div>
+                        <div>
+                            <ComposedChart
+                                width={1100}
+                                height={300}
+                                data={data}>
+                                <XAxis dataKey="name" />
+                                <YAxis />
+                                <Tooltip />
+                                <Legend />
+                                <CartesianGrid stroke="#f5f5f5" />
+                                <Area type="monotone" dataKey="amt" fill="#8884d8" stroke="#8884d8" />
+                                <Bar dataKey="pv" barSize={20} fill="#413ea0" />
+                                <Line type="monotone" dataKey="uv" stroke="#ff7300" />
+                            </ComposedChart>
+                        </div>
+
+                        <div>
+                            <PieChart width={1100} height={300}>
+                                <Pie data={data01} dataKey="value" nameKey="name" cx="50%" cy="50%" outerRadius={50} fill="#8884d8" />
+                                <Pie data={data02} dataKey="value" nameKey="name" cx="50%" cy="50%" innerRadius={60} outerRadius={80} fill="#82ca9d" label />
+                            </PieChart>
+                        </div>
+
+                        <div>
+                            <Paper sx={{ width: '100%' }}>
+                                <TableContainer sx={{ maxHeight: 440 }}>
+                                    <Table stickyHeader aria-label="sticky table">
+                                        <TableHead>
+                                            <TableRow>
+                                                <TableCell align="center" colSpan={2}>
+                                                    Country
+                                                </TableCell>
+                                                <TableCell align="center" colSpan={3}>
+                                                    Details
+                                                </TableCell>
+                                            </TableRow>
+                                            <TableRow>
+                                                {columns.map((column) => (
+                                                    <TableCell
+                                                        key={column.id}
+                                                        align={column.align}
+                                                        style={{ top: 57, minWidth: column.minWidth }}
+                                                    >
+                                                        {column.label}
+                                                    </TableCell>
+                                                ))}
+                                            </TableRow>
+                                        </TableHead>
+                                        <TableBody>
+                                            {rows
+                                                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                                                .map((row) => {
+                                                    return (
+                                                        <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
+                                                            {columns.map((column) => {
+                                                                const value = row[column.id];
+                                                                return (
+                                                                    <TableCell key={column.id} align={column.align}>
+                                                                        {column.format && typeof value === 'number'
+                                                                            ? column.format(value)
+                                                                            : value}
+                                                                    </TableCell>
+                                                                );
+                                                            })}
+                                                        </TableRow>
+                                                    );
+                                                })}
+                                        </TableBody>
+                                    </Table>
+                                </TableContainer>
+                                <TablePagination
+                                    rowsPerPageOptions={[10, 25, 100]}
+                                    component="div"
+                                    count={rows.length}
+                                    rowsPerPage={rowsPerPage}
+                                    page={page}
+                                    onPageChange={handleChangePage}
+                                    onRowsPerPageChange={handleChangeRowsPerPage}
                                 />
-                            </ImageListItem>
-                        ))}
-                    </ImageList>
+                            </Paper>
+
+                        </div>
+
+                    </div>
+
                 </Box>
             </Container>
-
-            {/* <ImageList sx={{ width: 500, height: 450 }} cols={3} rowHeight={164}>
-                {itemData.map((item) => (
-                    <ImageListItem key={item.img}>
-                        <img
-                            src={`${item.img}?w=164&h=164&fit=crop&auto=format`}
-                            srcSet={`${item.img}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
-                            alt={item.title}
-                            loading="lazy"
-                        />
-                    </ImageListItem>
-                ))}
-            </ImageList> */}
         </Box>
     );
 }
